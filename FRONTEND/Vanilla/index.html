@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Codificación de caracteres UTF-8 para soportar caracteres especiales y japoneses -->
+    <meta charset="UTF-8">
+    <!-- Meta viewport para que el sitio sea responsive en dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título que aparece en la pestaña del navegador -->
+    <title>ARTE DE LA TINTA — Tatuajes Japoneses</title>
+    <!-- Enlace al archivo CSS externo con todos los estilos del sitio -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Preconexión a Google Fonts para acelerar la carga de las fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Importación de dos fuentes: "Eater" (para títulos decorativos) y "Noto Serif JP" (para texto japonés y serif) -->
+    <link href="https://fonts.googleapis.com/css2?family=Eater&family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ==================== NAVBAR ==================== -->
+     
+    <!-- Barra de navegación fija que se ubica en la parte superior de la página -->
+    <header class="navbar" id="navbar">
+        <!-- Logo del estudio: contiene el kanji 墨 (tinta) y el nombre del estudio -->
+        <div class="navbar__logo">
+            <!-- Kanji japonés que significa "tinta" (sumi), usado como ícono del logo -->
+            <span class="navbar__kanji">墨</span>
+            <!-- Nombre principal del estudio de tatuajes -->
+            <h1 class="navbar__titulo">ARTE DE LA TINTA</h1>
+        </div>
+
+        <!-- Contenedor de los iconos de navegación (sin texto, solo iconos SVG con tooltips) -->
+        <nav class="navbar__iconos">
+            <!-- Icono de casa: enlace al inicio/hero de la página -->
+            <a href="#hero" class="navbar__icono" data-tooltip="Inicio">
+                <!-- SVG de un icono de casa con líneas y polígono -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+            </a>
+
+            <!-- Icono de carpeta: enlace a la sección de estilos/categorías de tatuajes -->
+            <a href="#estilos" class="navbar__icono" data-tooltip="Estilos">
+                <!-- SVG de un icono de carpeta -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                </svg>
+            </a>
+
+            <!-- Icono de calendario: enlace para agendar una cita (por ahora es un # sin destino real) -->
+            <a href="#" class="navbar__icono" data-tooltip="Agendar Cita">
+                <!-- SVG de un icono de calendario con un símbolo "+" en el centro -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                    <line x1="12" y1="14" x2="12" y2="18"/>
+                    <line x1="9" y1="16" x2="15" y2="16"/>
+                </svg>
+            </a>
+
+            <!-- Icono de carrito de compras: abre el panel lateral del carrito -->
+            <a href="#" class="navbar__icono carrito-btn" data-tooltip="Carrito">
+                <!-- SVG de un icono de carrito de compras con dos ruedas -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"/>
+                    <circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                <!-- Badge que muestra la cantidad de productos en el carrito, actualizado dinámicamente con JS -->
+                <span class="carrito__badge" id="carritoBadge">0</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- ==================== HERO ==================== -->
+    <!-- Sección principal/hero: es lo primero que ve el usuario, funciona como portada del sitio -->
+    <section class="hero" id="hero">
+        <!-- Capa oscura superpuesta sobre el fondo para mejorar la legibilidad del texto -->
+        <div class="hero__fondo-oscuro"></div>
+        <!-- Contenedor donde se generan las partículas animadas mediante JavaScript -->
+        <div class="hero__particulas-" id="particulas"></div>
+
+        <!-- Contenido textual del hero: subtítulo, título principal, descripción y botón CTA -->
+        <div class="hero__contenido">
+            <!-- Subtítulo pequeño que indica la especialidad del estudio -->
+            <span class="hero__subtitulo">Tatuajes Japoneses &amp; Ornamentales</span>
+            <!-- Título principal grande con la palabra "LA TINTA" resaltada en rojo -->
+            <h2 class="hero__titulo">ARTE DE<br><span class="hero__titulo--rojo">LA TINTA</span></h2>
+            <!-- Párrafo descriptivo que explica la propuesta de valor del estudio -->
+            <p class="hero__descripcion">Cada diseño cuenta una historia. Onis imponentes, 
+                dragones que fluyen con poder, flores de cerezo que evocan lo efímero de la vida y patrones ornamentales 
+                cargados de simbolismo. Todo tallado en la piel con la precisión, disciplina y respeto del arte tradicional japonés.</p>
+            <!-- Botón de llamada a la acción (CTA) que lleva a la sección de estilos, con un icono de flecha -->
+            <a href="#estilos" class="hero__btn">
+                <span>VER ESTILOS</span>
+                <!-- SVG de una flecha apuntando a la derecha -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                    <polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Elementos decorativos flotantes: kanjis japoneses que se animan con CSS para dar ambiente -->
+        <!-- 鬥: significa "ogro/demonio" en japonés, referencia a los Oni -->
+        <div class="hero__decorativo hero__decorativo--1">鬼</div>
+        <!-- 龍: significa "dragón" en japonés -->
+        <div class="hero__decorativo hero__decorativo--2">龍</div>
+        <!-- 桜: significa "flor de cerezo" (sakura) en japonés -->
+        <div class="hero__decorativo hero__decorativo--3">桜</div>
+    </section>
+
+    <!-- ==================== ESTILOS / CATEGORÍAS ==================== -->
+    <!-- Sección que muestra los diferentes estilos de tatuaje disponibles con un sistema de filtrado -->
+    <section class="estilos" id="estilos">
+        <!-- Encabezado de la sección con etiqueta, título y línea decorativa -->
+        <div class="estilos__header">
+            <!-- Etiqueta pequeña superior que indica el tipo de contenido -->
+            <span class="estilos__etiqueta">CATEGORÍAS</span>
+            <!-- Título principal de la sección -->
+            <h2 class="estilos__titulo">ESTILOS DE TINTA</h2>
+            <!-- Línea decorativa roja que acompaña el título -->
+            <div class="estilos__linea"></div>
+        </div>
+
+        <!-- Botones de filtro: permiten al usuario mostrar solo las tarjetas de una categoría específica -->
+        <div class="estilos__filtros">
+            <!-- Botón "Todos" activo por defecto: muestra todas las tarjetas sin filtrar -->
+            <button class="filtro-btn active" data-filtro="todos">Todos</button>
+            <!-- Botón que filtra solo los tatuajes de estilo japonés -->
+            <button class="filtro-btn" data-filtro="japones">Japonés</button>
+            <!-- Botón que filtra solo los tatuajes de estilo ornamental -->
+            <button class="filtro-btn" data-filtro="ornamental">Ornamental</button>
+            <!-- Botón que filtra solo los tatuajes de estilo blackout -->
+            <button class="filtro-btn" data-filtro="blackout">Otros</button>
+        </div>
+
+        <!-- Grid de tarjetas: contenedor donde se renderizan todas las tarjetas de tatuajes -->
+        <div class="estilos__grid" id="estilosGrid">
+
+            <!-- Tarjeta 1: Tatuaje de máscara Oni, categoría japonés -->
+            <div class="tarjeta" data-categoria="japones">
+                <!-- Contenedor de la imagen con efecto hover que revela un overlay -->
+                <div class="tarjeta__img-wrap">
+                    <!-- Imagen del tatuaje, cargada desde picsum.photos con una semilla para mantener consistencia -->
+                    <img src="img/onimask.jpg" alt="Oni Mask" class="tarjeta__img">
+                    <!-- Overlay que aparece al pasar el mouse: muestra la categoría y el botón de agregar -->
+                    <div class="tarjeta__overlay">
+                        <!-- Etiqueta que indica la categoría del tatuaje -->
+                        <span class="tarjeta__categoria">JAPONÉS</span>
+                        <!-- Botón que agrega este tatuaje al carrito; data-nombre y data-precio son leídos por JS -->
+                        <button class="tarjeta__btn" data-nombre="Oni Mask" data-precio="120">AGREGAR</button>
+                    </div>
+                </div>
+                <!-- Información de la tarjeta: nombre del diseño y precio -->
+                <div class="tarjeta__info">
+                    <h3 class="tarjeta__nombre">ONI MASK</h3>
+                    <span class="tarjeta__precio">$120 USD</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta 2: Tatuaje de dragón negro, categoría japonés -->
+            <div class="tarjeta" data-categoria="japones">
+                <div class="tarjeta__img-wrap">
+                    <img src="img/blackdragon.jpg" alt="Black Dragon" class="tarjeta__img">
+                    <div class="tarjeta__overlay">
+                        <span class="tarjeta__categoria">JAPONÉS</span>
+                        <button class="tarjeta__btn" data-nombre="Black Dragon" data-precio="250">AGREGAR</button>
+                    </div>
+                </div>
+                <div class="tarjeta__info">
+                    <h3 class="tarjeta__nombre">BLACK DRAGON</h3>
+                    <span class="tarjeta__precio">$250 USD</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta 3: Tatuaje de flores de cerezo (sakura), categoría japonés -->
+            <div class="tarjeta" data-categoria="japones">
+                <div class="tarjeta__img-wrap">
+                    <img src="img/sakurafloral.png" alt="Sakura" class="tarjeta__img">
+                    <div class="tarjeta__overlay">
+                        <span class="tarjeta__categoria">JAPONÉS</span>
+                        <button class="tarjeta__btn" data-nombre="Sakura Floral" data-precio="90">AGREGAR</button>
+                    </div>
+                </div>
+                <div class="tarjeta__info">
+                    <h3 class="tarjeta__nombre">SAKURA FLORAL</h3>
+                    <span class="tarjeta__precio">$90 USD</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta 4: Tatuaje de pez koi tradicional, categoría japonés -->
+            <div class="tarjeta" data-categoria="japones">
+                <div class="tarjeta__img-wrap">
+                    <img src="img/koitradicional.jpg" alt="Koi" class="tarjeta__img">
+                    <div class="tarjeta__overlay">
+                        <span class="tarjeta__categoria">JAPONÉS</span>
+                        <button class="tarjeta__btn" data-nombre="Koi Tradicional" data-precio="180">AGREGAR</button>
+                    </div>
+                </div>
+                <div class="tarjeta__info">
+                    <h3 class="tarjeta__nombre">KOI TRADICIONAL</h3>
+                    <span class="tarjeta__precio">$180 USD</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta 5: Tatuaje ornamental oscuro, categoría ornamental -->
+            <div class="tarjeta" data-categoria="ornamental">
+                <div class="tarjeta__img-wrap">
+                    <img src="img/ornamental.jpg" alt="Dark Ornamental" class="tarjeta__img">
+                    <div class="tarjeta__overlay">
+                        <span class="tarjeta__categoria">ORNAMENTAL</span>
+                        <button class="tarjeta__btn" data-nombre="Dark Ornamental" data-precio="200">AGREGAR</button>
+                    </div>
+                </div>
+                <div class="tarjeta__info">
+                    <h3 class="tarjeta__nombre">DARK ORNAMENTAL</h3>
+                    <span class="tarjeta__precio">$200 USD</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta 6: Tatuaje de mandala oscura, categoría ornamental -->
+            <div class="tarjeta" data-categoria="ornamental">
+                <div class="tarjeta__img-wrap">
+                    <img src="img/mandalaosc.jpg" alt="Mandala" class="tarjeta__img">
+                    <div class="tarjeta__overlay">
+                        <span class="tarjeta__categoria">ORNAMENTAL</span>
+                        <button class="tarjeta__btn" data-nombre="Mandala Oscura" data-precio="160">AGREGAR</button>
+                    </div>
+                </div>
+                <div class="tarjeta__info">
+                    <h3 class="tarjeta__nombre">MANDALA OSCURA</h3>
+                    <span class="tarjeta__precio">$160 USD</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta 7: Tatuaje Geisha (área con una mujer que simboliza el arte), categoría Geisha -->
+            <div class="tarjeta" data-categoria="Geisha">
+                <div class="tarjeta__img-wrap">
+                    <img src="img/geishaa.jpg" alt="Geisha" class="tarjeta__img">
+                    <div class="tarjeta__overlay">
+                        <span class="tarjeta__categoria">Otros</span>
+                        <button class="tarjeta__btn" data-nombre="Geisha" data-precio="300">AGREGAR</button>
+                    </div>
+                </div>
+                <div class="tarjeta__info">
+                    <h3 class="tarjeta__nombre">GEISHA</h3>
+                    <span class="tarjeta__precio">$300 USD</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta 8: Tatuaje Flor Lycoris Radiata, categoría Lycoris -->
+            <div class="tarjeta" data-categoria="Lycoris">
+                <div class="tarjeta__img-wrap">
+                    <img src="img/Lycoris.jpg" alt="Lycoris Radiata" class="tarjeta__img">
+                    <div class="tarjeta__overlay">
+                        <span class="tarjeta__categoria">Otros</span>
+                        <button class="tarjeta__btn" data-nombre="Lycoris Radiata" data-precio="280">AGREGAR</button>
+                    </div>
+                </div>
+                <div class="tarjeta__info">
+                    <h3 class="tarjeta__nombre">LYCORIS RADIATA</h3>
+                    <span class="tarjeta__precio">$280 USD</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==================== GALERÍA DESTACADA ==================== -->
+    <!-- Sección de portafolio: muestra trabajos recientes del estudio en un grid asimétrico -->
+    <section class="galeria" id="galeria">
+        <!-- Encabezado reutilizando las mismas clases de la sección de estilos para mantener consistencia visual -->
+        <div class="estilos__header">
+            <span class="estilos__etiqueta">PORTAFOLIO</span>
+            <h2 class="estilos__titulo">TRABAJO RECIENTE</h2>
+            <div class="estilos__linea"></div>
+        </div>
+        <!-- Grid de galería con distribución asimétrica: algunas imágenes son más grandes que otras -->
+        <div class="galeria__grid">
+            <!-- Imagen grande: manga japonesa completa, ocupa más espacio en el grid gracias a la clase "--grande" -->
+            <div class="galeria__item galeria__item--grande">
+                <img src="https://picsum.photos/seed/japanese-sleeve/800/1000.jpg" alt="Manga Japonesa">
+                <!-- Overlay que aparece al hover mostrando el nombre del trabajo -->
+                <div class="galeria__item-overlay">
+                    <span>Manga Completa</span>
+                </div>
+            </div>
+            <!-- Imagen pequeña: pecho ornamental -->
+            <div class="galeria__item">
+                <img src="https://picsum.photos/seed/ornamental-chest/500/600.jpg" alt="Pecho Ornamental">
+                <div class="galeria__item-overlay">
+                    <span>Pecho Ornamental</span>
+                </div>
+            </div>
+            <!-- Imagen pequeña: mano con trabajo blackout -->
+            <div class="galeria__item">
+                <img src="https://picsum.photos/seed/blackout-hand/500/600.jpg" alt="Mano Blackout">
+                <div class="galeria__item-overlay">
+                    <span>Blackout Mano</span>
+                </div>
+            </div>
+            <!-- Imagen pequeña: espalda con kanji -->
+            <div class="galeria__item">
+                <img src="https://picsum.photos/seed/kanji-back/500/600.jpg" alt="Espalda Kanji">
+                <div class="galeria__item-overlay">
+                    <span>Espalda Kanji</span>
+                </div>
+            </div>
+            <!-- Imagen grande: tigre estilo tradicional japonés, ocupa más espacio en el grid -->
+            <div class="galeria__item galeria__item--grande">
+                <img src="https://picsum.photos/seed/tiger-japanese/800/1000.jpg" alt="Tigre Japonés">
+                <div class="galeria__item-overlay">
+                    <span>Tigre Tradicional</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <!-- Pie de página con información del estudio, navegación y datos de contacto -->
+    <footer class="footer">
+        <!-- Onda decorativa SVG en la parte superior del footer con dos capas de color rojo semitransparente -->
+        <div class="footer__onda">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <!-- Primera ola: rojo con 15% de opacidad -->
+                <path d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,80 1440,60 L1440,120 L0,120 Z"
+                    fill="rgba(196,30,58,0.15)"/>
+                <!-- Segunda ola: rojo con 8% de opacidad, crea un efecto de profundidad -->
+                <path d="M0,80 C360,40 720,110 1080,70 C1260,50 1380,90 1440,80 L1440,120 L0,120 Z"
+                    fill="rgba(196,30,58,0.08)"/>
+            </svg>
+        </div>
+        <!-- Contenido del footer distribuido en tres columnas -->
+        <div class="footer__contenido">
+            <!-- Primera columna: información general del estudio -->
+            <div class="footer__col">
+                <!-- Kanji de tinta como elemento decorativo del footer -->
+                <span class="footer__kanji">墨</span>
+                <h3>ARTE DE LA TINTA</h3>
+                <!-- Descripción breve del estudio -->
+                <p>Estudio de tatuaje especializado en arte japonés, ornamental y blackout. Cada pieza es única.</p>
+            </div>
+            <!-- Segunda columna: enlaces de navegación rápida -->
+            <div class="footer__col">
+                <h4>NAVEGACIÓN</h4>
+                <!-- Enlaces internos a las distintas secciones del sitio -->
+                <a href="#hero">Inicio</a>
+                <a href="#estilos">Estilos</a>
+                <a href="#galeria">Galería</a>
+            </div>
+            <!-- Tercera columna: datos de contacto del estudio -->
+            <div class="footer__col">
+                <h4>CONTACTO</h4>
+                <p>Bogotá, Colombia</p>
+                <p>+57 300 123 4567</p>
+                <p>arte@tinta.com</p>
+            </div>
+        </div>
+        <!-- Barra inferior del footer con el copyright -->
+        <div class="footer__bottom">
+            <p>&copy; 2025 Arte de la Tinta. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- ==================== TOAST NOTIFICACIÓN ==================== -->
+    <!-- Notificación toast no intrusiva: aparece brevemente cuando se agrega un producto al carrito -->
+    <div class="toast" id="toast">
+        <!-- SVG de un checkmark (palomita) que indica que la acción fue exitosa -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5"/>
+        </svg>
+        <!-- Mensaje del toast, actualizado dinámicamente por JavaScript según el producto agregado -->
+        <span id="toastMsg">Agregado al carrito</span>
+    </div>
+
+    <!-- ==================== PANEL CARRITO ==================== -->
+    <!-- Panel lateral deslizante que muestra los productos agregados al carrito de compras -->
+    <div class="carrito-panel" id="carritoPanel">
+        <!-- Encabezado del panel con título y botón de cerrar -->
+        <div class="carrito-panel__header">
+            <h3>TU CARRITO</h3>
+            <!-- Botón con X para cerrar el panel del carrito -->
+            <button class="carrito-panel__cerrar" id="cerrarCarrito">
+                <!-- SVG de un icono de X (cerrar) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <!-- Lista donde se renderizan dinámicamente los items del carrito mediante JavaScript -->
+        <div class="carrito-panel__lista" id="carritoLista">
+            <!-- Mensaje que se muestra cuando no hay productos en el carrito -->
+            <p class="carrito-panel__vacio">Tu carrito está vacío</p>
+        </div>
+        <!-- Pie del panel con el total y botón de reserva; oculto por defecto hasta que haya items -->
+        <div class="carrito-panel__footer" id="carritoFooter" style="display:none;">
+            <!-- Fila que muestra la etiqueta "TOTAL" y el monto calculado por JavaScript -->
+            <div class="carrito-panel__total">
+                <span>TOTAL</span>
+                <span id="carritoTotal">$0 USD</span>
+            </div>
+            <!-- Botón para proceder a reservar la cita con los tatuajes seleccionados -->
+            <button class="carrito-panel__pagar">RESERVAR CITA</button>
+        </div>
+    </div>
+    <!-- Capa oscura semitransparente que se muestra detrás del panel del carrito para dar efecto de modal -->
+    <div class="carrito-overlay" id="carritoOverlay"></div>
+
+    <!-- Enlace al archivo JavaScript externo que contiene toda la lógica interactiva del sitio -->
+    <script src="index.js"></script>
+</body>
+</html>
