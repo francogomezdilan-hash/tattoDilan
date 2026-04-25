@@ -1,557 +1,624 @@
-/* ==========================================
-   VARIABLES Y RESET
-   ========================================== */
+/* Importación de fuentes desde Google Fonts: "Eater" para títulos decorativos y "Noto Serif JP" para texto japonés */
 @import url('https://fonts.googleapis.com/css2?family=Eater&family=Noto+Serif+JP:wght@400;700;900&display=swap');
 
+/* Variables CSS globales: permite definir colores y fuentes en un solo lugar y reutilizarlas en todo el archivo */
 :root {
-    --negro: #0a0a0a;
-    --negro-suave: #111111;
-    --gris-oscuro: #1a1a1a;
-    --gris: #2a2a2a;
-    --rojo: #C41E3A;
-    --rojo-oscuro: #8B0000;
-    --rojo-glow: rgba(196, 30, 58, 0.4);
-    --dorado: #C9A84C;
-    --dorado-oscuro: #8B7332;
-    --blanco: #f0e6d3;
-    --blanco-roto: rgba(240, 230, 211, 0.7);
-    --font-display: 'Eater', cursive;
-    --font-jp: 'Noto Serif JP', serif;
+    --negro: #0a0a0a;             /* Color negro principal, usado como fondo base del sitio */
+    --negro-suave: #111111;       /* Negro ligeramente más claro, para fondos secundarios */
+    --gris-oscuro: #1a1a1a;       /* Gris muy oscuro, usado como fondo de tarjetas y paneles */
+    --gris: #2a2a2a;              /* Gris medio, usado para bordes sutiles y elementos secundarios */
+    --rojo: #C41E3A;              /* Rojo principal, color de acento del sitio (inspirado en la bandera japonesa) */
+    --rojo-oscuro: #8B0000;       /* Rojo oscuro, usado para estados hover y sombras */
+    --rojo-glow: rgba(196, 30, 58, 0.4);  /* Rojo semitransparente, usado para efectos de brillo/glow */
+    --dorado: #C9A84C;            /* Dorado, color secundario de acento para detalles premium */
+    --dorado-oscuro: #8B7332;     /* Dorado oscuro, variante menos intensa */
+    --blanco: #f0e6d3;            /* Blanco cálido (tono hueso), usado como color de texto principal */
+    --blanco-roto: rgba(240, 230, 211, 0.7);  /* Blanco cálido semitransparente, para textos secundarios */
+    --font-display: 'Eater', cursive;         /* Fuente decorativa para títulos principales */
+    --font-jp: 'Noto Serif JP', serif;        /* Fuente serif japonesa para texto general */
 }
 
+/* Reset universal: elimina márgenes, paddings y establece box-sizing border-box en TODOS los elementos */
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box;       /* Hace que padding y border se incluyan dentro del ancho/alto definido */
 }
 
+/* Configuración del elemento html raíz */
 html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 70px;
+    scroll-behavior: smooth;      /* Activa el desplazamiento suave al hacer clic en anclas internas (#) */
+    scroll-padding-top: 70px;     /* Compensa la altura de la navbar fija para que los anclas no queden tapados */
 }
 
+/* Estilos base del cuerpo del documento */
 body {
-    background-color: var(--negro);
-    color: var(--blanco);
-    font-family: var(--font-jp);
-    overflow-x: hidden;
-    line-height: 1.6;
+    background-color: var(--negro);   /* Fondo negro principal */
+    color: var(--blanco);             /* Texto blanco cálido por defecto */
+    font-family: var(--font-jp);      /* Fuente japonesa para todo el texto */
+    overflow-x: hidden;               /* Oculta el scroll horizontal para evitar saltos por animaciones */
+    line-height: 1.6;                 /* Interlineado base para legibilidad */
 }
 
 /* ==========================================
    SCROLLBAR PERSONALIZADO
    ========================================== */
+
+/* Ancho de la barra de scroll vertical en navegadores WebKit (Chrome, Edge, Safari) */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 6px;                   /* Barra delgada de 6px */
 }
+
+/* Fondo/track de la barra de scroll */
 ::-webkit-scrollbar-track {
-    background: var(--negro);
+    background: var(--negro);     /* Negro para que se funda con el fondo del sitio */
 }
+
+/* El "pulgar" o parte arrastrable de la barra de scroll */
 ::-webkit-scrollbar-thumb {
-    background: var(--rojo-oscuro);
-    border-radius: 3px;
+    background: var(--rojo-oscuro);   /* Rojo oscuro para coincidir con la paleta */
+    border-radius: 3px;               /* Bordes redondeados sutiles */
 }
+
+/* El pulgar cuando el usuario pasa el mouse por encima */
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--rojo);
+    background: var(--rojo);          /* Rojo más brillante al hover */
 }
 
 /* ==========================================
    NAVBAR
    ========================================== */
+
+/* Barra de navegación principal */
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 65px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 30px;
-    background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(196, 30, 58, 0.15);
-    z-index: 1000;
-    transition: background 0.3s, box-shadow 0.3s;
+    position: fixed;               /* Fija en la pantalla, no se mueve al hacer scroll */
+    top: 0;                        /* Pegada al tope superior */
+    left: 0;                       /* Pegada al lado izquierdo */
+    width: 100%;                   /* Ocupa todo el ancho */
+    height: 65px;                  /* Altura fija de 65 píxeles */
+    display: flex;                 /* Flexbox para alinear elementos horizontalmente */
+    align-items: center;           /* Centra verticalmente los elementos */
+    justify-content: space-between;/* Logo a la izquierda, iconos a la derecha */
+    padding: 0 30px;              /* Espaciado interno lateral de 30px */
+    background: rgba(10, 10, 10, 0.85);  /* Negro semi-transparente para ver el fondo a través */
+    backdrop-filter: blur(12px);   /* Efecto de desenfoque en el fondo detrás de la navbar */
+    -webkit-backdrop-filter: blur(12px); /* Prefijo para compatibilidad con Safari */
+    border-bottom: 1px solid rgba(196, 30, 58, 0.15); /* Línea inferior roja muy sutil */
+    z-index: 1000;                 /* Se asegura de que esté por encima de todo el contenido */
+    transition: background 0.3s, box-shadow 0.3s; /* Transición suave al cambiar de estado */
 }
 
+/* Estado de la navbar cuando el usuario ha hecho scroll (clase agregada por JavaScript) */
 .navbar.scrolled {
-    background: rgba(10, 10, 10, 0.95);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 0 60px var(--rojo-glow);
+    background: rgba(10, 10, 10, 0.95);  /* Fondo más opaco al hacer scroll */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 0 60px var(--rojo-glow); /* Sombra oscura + glow rojo */
 }
 
+/* Contenedor del logo (kanji + texto) */
 .navbar__logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    display: flex;                 /* Flexbox para alinear kanji y título en fila */
+    align-items: center;           /* Centrado vertical */
+    gap: 12px;                    /* Espacio de 12px entre el kanji y el texto */
 }
 
+/* Kanji japonés 墨 del logo */
 .navbar__kanji {
-    font-family: var(--font-jp);
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--rojo);
-    text-shadow: 0 0 20px var(--rojo-glow);
-    line-height: 1;
+    font-family: var(--font-jp);   /* Fuente japonesa */
+    font-size: 2rem;              /* Tamaño grande */
+    font-weight: 900;             /* Máximo grosor */
+    color: var(--rojo);           /* Color rojo */
+    text-shadow: 0 0 20px var(--rojo-glow); /* Sombra de texto con brillo rojo */
+    line-height: 1;               /* Sin espacio extra entre líneas */
 }
 
+/* Texto "ARTE DE LA TINTA" del logo */
 .navbar__titulo {
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    letter-spacing: 3px;
-    color: var(--blanco);
-    font-weight: 400;
+    font-family: var(--font-display); /* Fuente decorativa Eater */
+    font-size: 0.85rem;              /* Tamaño pequeño */
+    letter-spacing: 3px;             /* Espaciado entre letras para dar elegancia */
+    color: var(--blanco);            /* Blanco cálido */
+    font-weight: 400;                /* Grosor normal */
 }
 
+/* Contenedor de los iconos de navegación */
 .navbar__iconos {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    display: flex;                 /* Flexbox para alinear iconos en fila */
+    align-items: center;           /* Centrado vertical */
+    gap: 6px;                     /* Espacio pequeño entre iconos */
 }
 
+/* Cada icono individual de la navbar */
 .navbar__icono {
-    position: relative;
-    display: flex;
+    position: relative;            /* Necesario para posicionar el tooltip */
+    display: flex;                 /* Centra el SVG dentro */
     align-items: center;
     justify-content: center;
-    width: 42px;
+    width: 42px;                   /* Cuadrado de 42px */
     height: 42px;
-    border-radius: 8px;
-    color: var(--blanco-roto);
-    text-decoration: none;
-    transition: all 0.3s ease;
-    cursor: pointer;
+    border-radius: 8px;            /* Bordes ligeramente redondeados */
+    color: var(--blanco-roto);     /* Color blanco semitransparente */
+    text-decoration: none;         /* Quita el subrayado del enlace */
+    transition: all 0.3s ease;     /* Transición suave para todos los cambios */
+    cursor: pointer;               /* Cambia el cursor a mano al pasar el mouse */
 }
 
+/* Estado hover de los iconos */
 .navbar__icono:hover {
-    color: var(--rojo);
-    background: rgba(196, 30, 58, 0.1);
-    transform: translateY(-2px);
+    color: var(--rojo);                               /* Cambia a rojo */
+    background: rgba(196, 30, 58, 0.1);              /* Fondo rojo muy sutil */
+    transform: translateY(-2px);                       /* Se eleva 2px */
 }
 
-/* Tooltip de los iconos */
+/* Tooltip de los iconos: texto que aparece abajo al pasar el mouse */
 .navbar__icono::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: -32px;
-    left: 50%;
-    transform: translateX(-50%) translateY(5px);
-    background: var(--gris);
-    color: var(--blanco);
-    font-family: var(--font-jp);
-    font-size: 0.65rem;
-    padding: 4px 10px;
-    border-radius: 4px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.25s ease;
-    letter-spacing: 1px;
+    content: attr(data-tooltip);   /* Toma el texto del atributo data-tooltip del HTML */
+    position: absolute;            /* Se posiciona relativo al icono */
+    bottom: -32px;                 /* 32px por debajo del icono */
+    left: 50%;                     /* Centrado horizontal */
+    transform: translateX(-50%) translateY(5px); /* Centrado exacto + ligeramente abajo */
+    background: var(--gris);       /* Fondo gris */
+    color: var(--blanco);          /* Texto blanco */
+    font-family: var(--font-jp);   /* Fuente japonesa */
+    font-size: 0.65rem;            /* Tamaño muy pequeño */
+    padding: 4px 10px;             /* Padding interno */
+    border-radius: 4px;            /* Bordes redondeados */
+    white-space: nowrap;           /* Evita que el texto se parta en varias líneas */
+    opacity: 0;                    /* Invisible por defecto */
+    pointer-events: none;          /* No interfiere con el mouse */
+    transition: all 0.25s ease;    /* Transición suave */
+    letter-spacing: 1px;           /* Espaciado entre letras */
 }
 
+/* Tooltip visible al hacer hover en el icono */
 .navbar__icono:hover::after {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    opacity: 1;                                        /* Se hace visible */
+    transform: translateX(-50%) translateY(0);         /* Sube a su posición final */
 }
 
-/* Badge del carrito */
+/* Contenedor del botón del carrito (necesita posición relativa para el badge) */
 .carrito-btn {
     position: relative;
 }
 
+/* Badge/círculo con número del carrito */
 .carrito__badge {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 18px;
+    position: absolute;            /* Posicionado sobre el icono del carrito */
+    top: 2px;                      /* Ligeramente abajo del tope */
+    right: 2px;                    /* Ligeramente adentro desde la derecha */
+    width: 18px;                   /* Círculo pequeño */
     height: 18px;
-    background: var(--rojo);
-    color: white;
-    font-size: 0.6rem;
-    font-weight: 700;
-    border-radius: 50%;
-    display: flex;
+    background: var(--rojo);       /* Fondo rojo */
+    color: white;                  /* Número blanco */
+    font-size: 0.6rem;            /* Número pequeño */
+    font-weight: 700;             /* Número en negrita */
+    border-radius: 50%;           /* Lo hace circular */
+    display: flex;                 /* Centra el número */
     align-items: center;
     justify-content: center;
-    transform: scale(0);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: scale(0);           /* Invisible por defecto (escala 0) */
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animación con rebote */
 }
 
+/* Badge visible cuando hay items en el carrito (clase agregada por JS) */
 .carrito__badge.visible {
-    transform: scale(1);
+    transform: scale(1);           /* Aparece con efecto rebote */
 }
 
 /* ==========================================
    HERO
    ========================================== */
+
+/* Sección hero/portada principal */
 .hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    min-height: 600px;
-    display: flex;
+    position: relative;            /* Para posicionar elementos hijos de forma absoluta */
+    width: 100%;                   /* Todo el ancho */
+    height: 100vh;                 /* Toda la altura de la ventana */
+    min-height: 600px;             /* Altura mínima en pantallas pequeñas */
+    display: flex;                 /* Centra el contenido */
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    /* Fondo con oni japonés */
+    overflow: hidden;              /* Oculta lo que sobresalga */
+    /* Fondo compuesto: un gradiente oscuro encima de una imagen */
     background:
         linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.6) 50%, rgba(10,10,10,0.95) 100%),
         url('img/fonoo.jpg') center/cover no-repeat fixed;
+    /* El gradiente va de transparente arriba a casi negro abajo, para que el texto inferior sea legible */
+    /* La imagen se centra, cubre todo el área, no se repite y tiene efecto parallax (fixed) */
 }
 
+/* Capa oscura adicional con gradiente radial: oscurece los bordes y deja el centro más claro */
 .hero__fondo-oscuro {
-    position: absolute;
-    inset: 0;
+    position: absolute;            /* Se superpone sobre el fondo */
+    inset: 0;                      /* Ocupa todo el hero (atajo para top/right/bottom/left: 0) */
     background: radial-gradient(ellipse at center, transparent 20%, rgba(10,10,10,0.7) 70%, rgba(10,10,10,0.95) 100%);
-    pointer-events: none;
+    /* Centro transparente, se oscurece hacia los bordes tipo viñeta */
+    pointer-events: none;          /* Permite hacer clic a través de esta capa */
 }
 
-/* Partículas flotantes (pétalos) */
+/* Contenedor de las partículas flotantes */
 .hero__particulas {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
+    position: absolute;            /* Se superpone sobre todo */
+    inset: 0;                      /* Ocupa todo el hero */
+    pointer-events: none;          /* No interfiere con clics */
+    overflow: hidden;              /* Oculta partículas que salgan del área */
 }
 
+/* Cada partícula individual (creada dinámicamente por JavaScript) */
 .particula {
-    position: absolute;
-    width: 8px;
+    position: absolute;            /* Posicionada libremente dentro del contenedor */
+    width: 8px;                    /* Tamaño pequeño */
     height: 8px;
-    background: var(--rojo);
-    opacity: 0;
-    border-radius: 50% 0 50% 0;
-    animation: caer linear infinite;
+    background: var(--rojo);       /* Color rojo */
+    opacity: 0;                    /* Invisible por defecto */
+    border-radius: 50% 0 50% 0;    /* Forma de pétalo (esquinas redondeadas alternadas) */
+    animation: caer linear infinite; /* Animación de caída continua */
 }
 
+/* Fotogramas clave de la animación de caída de partículas */
 @keyframes caer {
     0% {
-        opacity: 0;
-        transform: translateY(-20px) rotate(0deg) scale(0.5);
+        opacity: 0;                                    /* Invisible al inicio */
+        transform: translateY(-20px) rotate(0deg) scale(0.5); /* Parte desde arriba, sin rotación, pequeña */
     }
     10% {
-        opacity: 0.6;
+        opacity: 0.6;                                  /* Aparece rápidamente */
     }
     90% {
-        opacity: 0.3;
+        opacity: 0.3;                                  /* Se va desvaneciendo */
     }
     100% {
-        opacity: 0;
-        transform: translateY(100vh) rotate(720deg) scale(0.2);
+        opacity: 0;                                    /* Desaparece al final */
+        transform: translateY(100vh) rotate(720deg) scale(0.2); /* Cae hasta el fondo, gira 2 vueltas, se hace más pequeña */
     }
 }
 
+/* Contenedor del texto del hero (subtítulo, título, descripción, botón) */
 .hero__contenido {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 0 20px;
-    animation: heroEntrada 1.2s ease-out;
+    position: relative;            /* Para estar por encima de las capas absolutas */
+    z-index: 2;                    /* Se asegura de estar sobre el fondo y las partículas */
+    text-align: center;            /* Todo el texto centrado */
+    padding: 0 20px;              /* Padding lateral para no pegarse a los bordes en móvil */
+    animation: heroEntrada 1.2s ease-out; /* Animación de entrada al cargar la página */
 }
 
+/* Fotogramas clave de la animación de entrada del contenido del hero */
 @keyframes heroEntrada {
     from {
-        opacity: 0;
-        transform: translateY(40px);
+        opacity: 0;                /* Invisible */
+        transform: translateY(40px); /* Empieza 40px más abajo */
     }
     to {
-        opacity: 1;
-        transform: translateY(0);
+        opacity: 1;                /* Visible */
+        transform: translateY(0);  /* Vuelve a su posición original */
     }
 }
 
+/* Subtítulo pequeño "TATUAJES JAPONESES & ORNAMENTALES" */
 .hero__subtitulo {
-    display: inline-block;
-    font-size: 0.75rem;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    color: var(--dorado);
-    border: 1px solid rgba(201, 168, 76, 0.3);
-    padding: 6px 20px;
-    margin-bottom: 20px;
+    display: inline-block;         /* Permite aplicar padding y border a un span */
+    font-size: 0.75rem;           /* Texto pequeño */
+    letter-spacing: 6px;           /* Mucha separación entre letras */
+    text-transform: uppercase;     /* Fuerza mayúsculas */
+    color: var(--dorado);         /* Color dorado */
+    border: 1px solid rgba(201, 168, 76, 0.3); /* Borde dorado sutil */
+    padding: 6px 20px;            /* Padding interno */
+    margin-bottom: 20px;          /* Espacio debajo */
 }
 
+/* Título principal "ARTE DE LA TINTA" */
 .hero__titulo {
-    font-family: var(--font-display);
-    font-size: clamp(2.8rem, 8vw, 6rem);
-    font-weight: 400;
-    line-height: 1;
-    margin-bottom: 20px;
-    color: var(--blanco);
-    text-shadow: 0 0 40px rgba(0,0,0,0.8);
+    font-family: var(--font-display); /* Fuente decorativa */
+    font-size: clamp(2.8rem, 8vw, 6rem); /* Tamaño responsivo: mínimo 2.8rem, ideal 8vw, máximo 6rem */
+    font-weight: 400;                /* Grosor normal (la fuente Eater ya es gruesa) */
+    line-height: 1;                  /* Sin interlineado extra */
+    margin-bottom: 20px;            /* Espacio debajo */
+    color: var(--blanco);           /* Blanco cálido */
+    text-shadow: 0 0 40px rgba(0,0,0,0.8); /* Sombra oscura para legibilidad sobre la imagen */
 }
 
+/* La parte "LA TINTA" del título, en rojo */
 .hero__titulo--rojo {
-    color: var(--rojo);
-    text-shadow: 0 0 30px var(--rojo-glow), 0 0 80px rgba(196, 30, 58, 0.2);
+    color: var(--rojo);            /* Color rojo */
+    text-shadow: 0 0 30px var(--rojo-glow), 0 0 80px rgba(196, 30, 58, 0.2); /* Doble sombra de brillo rojo */
 }
 
+/* Párrafo descriptivo del hero */
 .hero__descripcion {
-    max-width: 500px;
-    margin: 0 auto 30px;
-    font-size: 0.9rem;
-    color: var(--blanco-roto);
-    line-height: 1.8;
+    max-width: 500px;              /* Ancho máximo para que el texto no sea demasiado largo */
+    margin: 0 auto 30px;           /* Centrado con espacio debajo */
+    font-size: 0.9rem;            /* Tamaño de lectura */
+    color: var(--blanco-roto);    /* Blanco semitransparente */
+    line-height: 1.8;             /* Interlineado amplio para legibilidad */
 }
 
+/* Botón "VER ESTILOS" del hero */
 .hero__btn {
-    display: inline-flex;
+    display: inline-flex;          /* Flexbox para alinear texto e icono */
     align-items: center;
-    gap: 10px;
-    padding: 14px 36px;
-    border: 1px solid var(--rojo);
-    color: var(--blanco);
-    text-decoration: none;
-    font-family: var(--font-jp);
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
+    gap: 10px;                    /* Espacio entre texto y flecha */
+    padding: 14px 36px;           /* Padding generoso */
+    border: 1px solid var(--rojo); /* Borde rojo */
+    color: var(--blanco);         /* Texto blanco */
+    text-decoration: none;        /* Sin subrayado */
+    font-family: var(--font-jp);  /* Fuente japonesa */
+    font-size: 0.8rem;           /* Tamaño pequeño */
+    letter-spacing: 3px;          /* Espaciado entre letras */
+    transition: all 0.4s ease;    /* Transición suave */
+    position: relative;           /* Para posicionar el pseudo-elemento */
+    overflow: hidden;             /* Oculta lo que sobresalga del botón */
 }
 
+/* Pseudo-elemento que crea el efecto de relleno del botón al hover */
 .hero__btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--rojo);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
-    z-index: -1;
+    content: '';                   /* Necesario para que el pseudo-elemento exista */
+    position: absolute;            /* Se posiciona sobre el botón */
+    inset: 0;                      /* Ocupa todo el botón */
+    background: var(--rojo);       /* Fondo rojo */
+    transform: scaleX(0);          /* Invisible (escalado a 0 en el eje X) */
+    transform-origin: left;        /* El punto de origen del escalado es la izquierda */
+    transition: transform 0.4s ease; /* Transición suave */
+    z-index: -1;                   /* Se pone detrás del texto */
 }
 
+/* Al hover, el fondo rojo se expande de izquierda a derecha */
 .hero__btn:hover::before {
-    transform: scaleX(1);
+    transform: scaleX(1);          /* Se expande al 100% */
 }
 
+/* Estilos adicionales del botón al hover */
 .hero__btn:hover {
-    color: white;
-    box-shadow: 0 0 30px var(--rojo-glow);
+    color: white;                  /* Texto blanco sobre fondo rojo */
+    box-shadow: 0 0 30px var(--rojo-glow); /* Brillo rojo alrededor */
 }
 
+/* Icono SVG de la flecha dentro del botón */
 .hero__btn svg {
-    transition: transform 0.3s;
+    transition: transform 0.3s;    /* Transición suave para el movimiento */
 }
 
+/* La flecha se desplaza a la derecha al hover */
 .hero__btn:hover svg {
-    transform: translateX(4px);
+    transform: translateX(4px);    /* Se mueve 4px a la derecha */
 }
 
-/* Kanjis decorativos flotantes */
+/* Kanjis decorativos flotantes (鬼, 龍, 桜) */
 .hero__decorativo {
-    position: absolute;
-    font-family: var(--font-jp);
-    font-size: 8rem;
-    font-weight: 900;
-    color: rgba(196, 30, 58, 0.04);
-    pointer-events: none;
-    z-index: 1;
-    animation: flotar 8s ease-in-out infinite;
+    position: absolute;            /* Posicionados libremente sobre el hero */
+    font-family: var(--font-jp);   /* Fuente japonesa */
+    font-size: 8rem;              /* Tamaño muy grande */
+    font-weight: 900;             /* Máximo grosor */
+    color: rgba(196, 30, 58, 0.04); /* Rojo casi invisible (4% de opacidad) */
+    pointer-events: none;          /* No interfiere con clics */
+    z-index: 1;                    /* Debajo del contenido principal pero sobre el fondo */
+    animation: flotar 8s ease-in-out infinite; /* Animación de flotación continua */
 }
 
+/* Posición del primer kanji decorativo (鬼 - Oni) */
 .hero__decorativo--1 {
-    top: 10%;
-    left: 5%;
-    animation-delay: 0s;
+    top: 10%;                      /* 10% desde arriba */
+    left: 5%;                      /* 5% desde la izquierda */
+    animation-delay: 0s;           /* Sin retraso */
 }
 
+/* Posición del segundo kanji decorativo (龍 - Dragón) */
 .hero__decorativo--2 {
-    bottom: 15%;
-    right: 8%;
-    animation-delay: -3s;
-    font-size: 10rem;
+    bottom: 15%;                   /* 15% desde abajo */
+    right: 8%;                     /* 8% desde la derecha */
+    animation-delay: -3s;          /* Empieza la animación 3 segundos antes (para desincronizar) */
+    font-size: 10rem;             /* Más grande que los demás */
 }
 
+/* Posición del tercer kanji decorativo (桜 - Sakura) */
 .hero__decorativo--3 {
-    top: 50%;
-    right: 15%;
-    animation-delay: -5s;
-    font-size: 6rem;
+    top: 50%;                      /* A la mitad */
+    right: 15%;                    /* 15% desde la derecha */
+    animation-delay: -5s;          /* Empieza 5 segundos antes */
+    font-size: 6rem;              /* Más pequeño */
 }
 
+/* Fotogramas clave de la animación de flotación de los kanjis */
 @keyframes flotar {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    33% { transform: translateY(-20px) rotate(2deg); }
-    66% { transform: translateY(10px) rotate(-1deg); }
+    0%, 100% { transform: translateY(0) rotate(0deg); }     /* Posición original, sin rotación */
+    33% { transform: translateY(-20px) rotate(2deg); }       /* Sube 20px y rota ligeramente */
+    66% { transform: translateY(10px) rotate(-1deg); }       /* Baja 10px y rota en sentido contrario */
 }
 
 /* ==========================================
    SECCIÓN ESTILOS
    ========================================== */
+
+/* Contenedor principal de la sección de estilos/categorías */
 .estilos {
-    position: relative;
-    padding: 100px 30px 80px;
-    background: var(--negro);
+    position: relative;            /* Para posicionar el pseudo-elemento decorativo */
+    padding: 100px 30px 80px;     /* Padding amplio: 100px arriba, 30px lados, 80px abajo */
+    background: var(--negro);      /* Fondo negro */
 }
 
+/* Línea decorativa roja en la parte superior de la sección (creada con pseudo-elemento) */
 .estilos::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 80px;
-    background: linear-gradient(to bottom, var(--rojo), transparent);
+    content: '';                   /* Necesario para que exista */
+    position: absolute;            /* Posicionado sobre la sección */
+    top: 0;                        /* Pegado al tope */
+    left: 50%;                     /* Centrado horizontal */
+    transform: translateX(-50%);   /* Centrado exacto */
+    width: 1px;                    /* Línea delgada de 1px */
+    height: 80px;                  /* 80px de alto */
+    background: linear-gradient(to bottom, var(--rojo), transparent); /* Rojo que se desvanece hacia abajo */
 }
 
+/* Encabezado de la sección (etiqueta + título + línea) */
 .estilos__header {
-    text-align: center;
-    margin-bottom: 40px;
+    text-align: center;            /* Todo centrado */
+    margin-bottom: 40px;          /* Espacio debajo */
 }
 
+/* Etiqueta pequeña "CATEGORÍAS" */
 .estilos__etiqueta {
-    display: inline-block;
-    font-size: 0.65rem;
-    letter-spacing: 5px;
-    color: var(--dorado);
-    margin-bottom: 10px;
+    display: inline-block;         /* Permite aplicar márgenes a un span */
+    font-size: 0.65rem;           /* Muy pequeño */
+    letter-spacing: 5px;           /* Mucha separación entre letras */
+    color: var(--dorado);         /* Dorado */
+    margin-bottom: 10px;          /* Espacio debajo */
 }
 
+/* Título "ESTILOS DE TINTA" */
 .estilos__titulo {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-family: var(--font-display); /* Fuente decorativa */
+    font-size: clamp(1.8rem, 5vw, 2.8rem); /* Tamaño responsivo */
     font-weight: 400;
     color: var(--blanco);
     margin-bottom: 16px;
 }
 
+/* Línea decorativa roja bajo el título */
 .estilos__linea {
-    width: 60px;
-    height: 2px;
-    background: var(--rojo);
-    margin: 0 auto;
-    box-shadow: 0 0 10px var(--rojo-glow);
+    width: 60px;                   /* Ancho corto */
+    height: 2px;                   /* Delgada */
+    background: var(--rojo);       /* Roja */
+    margin: 0 auto;               /* Centrada */
+    box-shadow: 0 0 10px var(--rojo-glow); /* Brillo rojo sutil */
 }
 
-/* Filtros */
+/* Contenedor de los botones de filtro */
 .estilos__filtros {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 50px;
-    flex-wrap: wrap;
+    display: flex;                 /* Filas de botones */
+    justify-content: center;       /* Centrados horizontalmente */
+    gap: 10px;                    /* Espacio entre botones */
+    margin-bottom: 50px;          /* Espacio debajo antes del grid */
+    flex-wrap: wrap;               /* Permite que los botones bajen de línea en pantallas pequeñas */
 }
 
+/* Cada botón de filtro individual */
 .filtro-btn {
-    padding: 10px 28px;
-    background: transparent;
-    border: 1px solid var(--gris);
-    color: var(--blanco-roto);
-    font-family: var(--font-jp);
+    padding: 10px 28px;           /* Padding interno */
+    background: transparent;       /* Sin fondo */
+    border: 1px solid var(--gris); /* Borde gris sutil */
+    color: var(--blanco-roto);    /* Texto blanco semitransparente */
+    font-family: var(--font-jp);   /* Fuente japonesa */
     font-size: 0.75rem;
     letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 2px;
+    cursor: pointer;               /* Cursor de mano */
+    transition: all 0.3s ease;    /* Transición suave */
+    border-radius: 2px;           /* Bordes apenas redondeados */
 }
 
+/* Botón de filtro al hover */
 .filtro-btn:hover {
-    border-color: var(--rojo);
-    color: var(--rojo);
+    border-color: var(--rojo);     /* Borde rojo */
+    color: var(--rojo);            /* Texto rojo */
 }
 
+/* Botón de filtro activo (clase toggled por JavaScript) */
 .filtro-btn.active {
-    background: var(--rojo);
-    border-color: var(--rojo);
-    color: white;
-    box-shadow: 0 0 20px var(--rojo-glow);
+    background: var(--rojo);       /* Fondo rojo sólido */
+    border-color: var(--rojo);     /* Borde rojo */
+    color: white;                  /* Texto blanco */
+    box-shadow: 0 0 20px var(--rojo-glow); /* Brillo rojo */
 }
 
-/* Grid de tarjetas */
+/* Grid de tarjetas de tatuajes */
 .estilos__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 24px;
-    max-width: 1200px;
-    margin: 0 auto;
+    display: grid;                 /* CSS Grid */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Columnas automáticas: mínimo 260px, se adaptan */
+    gap: 24px;                    /* Espacio entre tarjetas */
+    max-width: 1200px;            /* Ancho máximo del grid */
+    margin: 0 auto;               /* Centrado */
 }
 
-/* Tarjeta individual */
+/* Cada tarjeta de tatuaje individual */
 .tarjeta {
-    background: var(--gris-oscuro);
-    border: 1px solid rgba(255,255,255,0.04);
-    border-radius: 4px;
-    overflow: hidden;
-    transition: all 0.4s ease;
-    position: relative;
+    background: var(--gris-oscuro); /* Fondo gris oscuro */
+    border: 1px solid rgba(255,255,255,0.04); /* Borde blanco casi invisible */
+    border-radius: 4px;           /* Bordes ligeramente redondeados */
+    overflow: hidden;              /* Oculta lo que sobresalga (la imagen al hacer zoom) */
+    transition: all 0.4s ease;    /* Transición suave para hover */
+    position: relative;           /* Para posicionar el pseudo-elemento de borde */
 }
 
+/* Borde rojo que aparece alrededor de la tarjeta al hover (pseudo-elemento) */
 .tarjeta::before {
     content: '';
     position: absolute;
-    inset: 0;
-    border: 1px solid var(--rojo);
+    inset: 0;                      /* Cubre toda la tarjeta */
+    border: 1px solid var(--rojo); /* Borde rojo */
     border-radius: 4px;
-    opacity: 0;
+    opacity: 0;                    /* Invisible por defecto */
     transition: opacity 0.4s ease;
-    pointer-events: none;
-    z-index: 3;
+    pointer-events: none;          /* No interfiere con clics */
+    z-index: 3;                    /* Encima de todo el contenido de la tarjeta */
 }
 
+/* Borde rojo visible al hover */
 .tarjeta:hover::before {
-    opacity: 0.5;
+    opacity: 0.5;                  /* Semitransparente */
 }
 
+/* Tarjeta al hover: se eleva y tiene sombra */
 .tarjeta:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(196,30,58,0.1);
+    transform: translateY(-8px);   /* Sube 8px */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(196,30,58,0.1); /* Sombra oscura + brillo rojo sutil */
 }
 
+/* Clase aplicada por JavaScript para ocultar tarjetas que no coinciden con el filtro */
 .tarjeta.oculto {
-    display: none;
+    display: none;                 /* Las elimina del flujo del documento */
 }
 
+/* Contenedor de la imagen de la tarjeta */
 .tarjeta__img-wrap {
-    position: relative;
+    position: relative;            /* Para posicionar el overlay encima */
     width: 100%;
-    height: 340px;
-    overflow: hidden;
+    height: 340px;                 /* Altura fija */
+    overflow: hidden;              /* Oculta la imagen cuando hace zoom */
 }
 
+/* Imagen dentro de la tarjeta */
 .tarjeta__img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease, filter 0.4s ease;
-    filter: brightness(0.7) saturate(0.8);
+    object-fit: cover;             /* Cubre el contenedor sin deformarse, recortando si es necesario */
+    transition: transform 0.6s ease, filter 0.4s ease; /* Transición suave para zoom y filtro */
+    filter: brightness(0.7) saturate(0.8); /* Ligeramente oscura y desaturada por defecto */
 }
 
+/* Imagen al hover: hace zoom y se oscurece más */
 .tarjeta:hover .tarjeta__img {
-    transform: scale(1.08);
-    filter: brightness(0.5) saturate(0.6);
+    transform: scale(1.08);        /* Zoom del 8% */
+    filter: brightness(0.5) saturate(0.6); /* Más oscura y desaturada */
 }
 
+/* Capa overlay que aparece sobre la imagen al hover */
 .tarjeta__overlay {
     position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
+    inset: 0;                      /* Cubre toda la imagen */
+    display: flex;                 /* Centra su contenido */
+    flex-direction: column;        /* Elementos en columna */
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    opacity: 0;
+    gap: 16px;                    /* Espacio entre categoría y botón */
+    opacity: 0;                    /* Invisible por defecto */
     transition: opacity 0.4s ease;
-    background: rgba(10, 10, 10, 0.3);
+    background: rgba(10, 10, 10, 0.3); /* Fondo oscuro semitransparente */
 }
 
+/* Overlay visible al hover */
 .tarjeta:hover .tarjeta__overlay {
     opacity: 1;
 }
 
+/* Etiqueta de categoría dentro del overlay (ej: "JAPONÉS") */
 .tarjeta__categoria {
     font-size: 0.6rem;
     letter-spacing: 4px;
-    color: var(--dorado);
-    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--dorado);         /* Dorado */
+    border: 1px solid rgba(201,168,76,0.3); /* Borde dorado sutil */
     padding: 4px 14px;
 }
 
+/* Botón "AGREGAR" dentro del overlay */
 .tarjeta__btn {
     padding: 12px 30px;
-    background: var(--rojo);
+    background: var(--rojo);       /* Fondo rojo */
     border: none;
     color: white;
     font-family: var(--font-jp);
@@ -559,25 +626,29 @@ body {
     letter-spacing: 3px;
     cursor: pointer;
     transition: all 0.3s ease;
-    transform: translateY(10px);
+    transform: translateY(10px);   /* Empieza 10px más abajo */
 }
 
+/* Botón sube a su posición al hover de la tarjeta */
 .tarjeta:hover .tarjeta__btn {
     transform: translateY(0);
 }
 
+/* Botón al hover directo */
 .tarjeta__btn:hover {
-    background: var(--rojo-oscuro);
-    box-shadow: 0 0 20px var(--rojo-glow);
+    background: var(--rojo-oscuro); /* Rojo más oscuro */
+    box-shadow: 0 0 20px var(--rojo-glow); /* Brillo rojo */
 }
 
+/* Área de información debajo de la imagen (nombre + precio) */
 .tarjeta__info {
     padding: 16px 18px;
-    display: flex;
+    display: flex;                 /* Nombre a la izquierda, precio a la derecha */
     justify-content: space-between;
     align-items: center;
 }
 
+/* Nombre del tatuaje */
 .tarjeta__nombre {
     font-family: var(--font-display);
     font-size: 0.95rem;
@@ -585,117 +656,135 @@ body {
     letter-spacing: 2px;
 }
 
+/* Precio del tatuaje */
 .tarjeta__precio {
     font-size: 0.8rem;
-    color: var(--dorado);
-    font-weight: 700;
+    color: var(--dorado);         /* Dorado para destacar */
+    font-weight: 700;             /* Negrita */
 }
 
 /* ==========================================
    GALERÍA DESTACADA
    ========================================== */
+
+/* Sección de la galería/portafolio */
 .galeria {
     padding: 80px 30px;
-    background: var(--negro-suave);
-    border-top: 1px solid rgba(255,255,255,0.03);
+    background: var(--negro-suave); /* Fondo ligeramente diferente al de la sección anterior */
+    border-top: 1px solid rgba(255,255,255,0.03); /* Línea divisoria muy sutil */
 }
 
+/* Grid de la galería */
 .galeria__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 280px;
-    gap: 12px;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas fijas */
+    grid-auto-rows: 280px;                 /* Altura fija de cada fila */
+    gap: 12px;                             /* Espacio pequeño entre imágenes */
     max-width: 1200px;
     margin: 0 auto;
 }
 
+/* Cada item de la galería */
 .galeria__item {
-    position: relative;
-    overflow: hidden;
+    position: relative;            /* Para posicionar el overlay */
+    overflow: hidden;              /* Oculta la imagen al hacer zoom */
     border-radius: 3px;
-    cursor: pointer;
+    cursor: pointer;               /* Cursor de mano */
 }
 
+/* Items grandes de la galería: ocupan 2 filas */
 .galeria__item--grande {
-    grid-row: span 2;
+    grid-row: span 2;             /* Se expande verticalmente 2 filas */
 }
 
+/* Imagen dentro de cada item de la galería */
 .galeria__item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.6s ease, filter 0.4s ease;
-    filter: brightness(0.6) saturate(0.7);
+    filter: brightness(0.6) saturate(0.7); /* Oscura y desaturada por defecto */
 }
 
+/* Imagen al hover: zoom y más oscura */
 .galeria__item:hover img {
-    transform: scale(1.06);
-    filter: brightness(0.4) saturate(0.5);
+    transform: scale(1.06);        /* Zoom del 6% */
+    filter: brightness(0.4) saturate(0.5); /* Más oscura */
 }
 
+/* Overlay de cada item: aparece al hover con nombre del trabajo */
 .galeria__item-overlay {
     position: absolute;
     inset: 0;
     display: flex;
-    align-items: flex-end;
+    align-items: flex-end;         /* Alinea el texto abajo */
     padding: 20px;
     opacity: 0;
     transition: opacity 0.4s ease;
-    background: linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 60%);
+    background: linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 60%); /* Gradiente de abajo hacia arriba */
 }
 
+/* Overlay visible al hover */
 .galeria__item:hover .galeria__item-overlay {
     opacity: 1;
 }
 
+/* Texto dentro del overlay de la galería */
 .galeria__item-overlay span {
     font-family: var(--font-display);
     font-size: 0.9rem;
     letter-spacing: 2px;
     color: var(--blanco);
-    border-left: 2px solid var(--rojo);
-    padding-left: 12px;
+    border-left: 2px solid var(--rojo); /* Línea roja a la izquierda como decoración */
+    padding-left: 12px;            /* Espacio entre la línea y el texto */
 }
 
 /* ==========================================
    FOOTER
    ========================================== */
+
+/* Pie de página */
 .footer {
     position: relative;
-    background: var(--negro);
-    padding-top: 0;
-    overflow: hidden;
+    background: var(--negro);      /* Fondo negro */
+    padding-top: 0;               /* Sin padding arriba (la onda lo cubre) */
+    overflow: hidden;              /* Evita que la onda SVG sobresalga */
 }
 
+/* Contenedor de la onda decorativa SVG */
 .footer__onda {
     width: 100%;
-    line-height: 0;
+    line-height: 0;                /* Elimina espacio extra debajo del SVG */
 }
 
+/* El SVG de la onda */
 .footer__onda svg {
     width: 100%;
-    height: 100px;
+    height: 100px;                 /* Altura de la onda */
 }
 
+/* Contenido del footer distribuido en columnas */
 .footer__contenido {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr; /* Primera columna el doble de ancho */
     gap: 40px;
     max-width: 1100px;
     margin: 0 auto;
     padding: 40px 30px;
 }
 
+/* Kanji decorativo 墨 del footer */
 .footer__kanji {
     font-family: var(--font-jp);
     font-size: 3rem;
     font-weight: 900;
     color: var(--rojo);
     text-shadow: 0 0 20px var(--rojo-glow);
-    display: block;
+    display: block;                /* Ocupa su propia línea */
     margin-bottom: 8px;
 }
 
+/* Título del footer "ARTE DE LA TINTA" */
 .footer__col h3 {
     font-family: var(--font-display);
     font-size: 1.1rem;
@@ -703,132 +792,150 @@ body {
     margin-bottom: 10px;
 }
 
+/* Subtítulos de columnas "NAVEGACIÓN" y "CONTACTO" */
 .footer__col h4 {
     font-size: 0.7rem;
     letter-spacing: 3px;
-    color: var(--dorado);
+    color: var(--dorado);         /* Dorado */
     margin-bottom: 14px;
 }
 
+/* Párrafos del footer */
 .footer__col p {
     font-size: 0.8rem;
-    color: var(--blanco-roto);
+    color: var(--blanco-roto);    /* Blanco semitransparente */
     line-height: 1.8;
 }
 
+/* Enlaces del footer */
 .footer__col a {
-    display: block;
+    display: block;                /* Cada enlace en su propia línea */
     font-size: 0.8rem;
     color: var(--blanco-roto);
-    text-decoration: none;
+    text-decoration: none;        /* Sin subrayado */
     padding: 4px 0;
     transition: color 0.3s;
 }
 
+/* Enlaces al hover */
 .footer__col a:hover {
-    color: var(--rojo);
+    color: var(--rojo);            /* Cambian a rojo */
 }
 
+/* Barra inferior del footer con copyright */
 .footer__bottom {
     text-align: center;
     padding: 20px;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(255,255,255,0.05); /* Línea divisoria muy sutil */
 }
 
+/* Texto de copyright */
 .footer__bottom p {
     font-size: 0.7rem;
-    color: rgba(240, 230, 211, 0.35);
+    color: rgba(240, 230, 211, 0.35); /* Muy tenue, casi invisible */
     letter-spacing: 1px;
 }
 
 /* ==========================================
    TOAST
    ========================================== */
+
+/* Notificación toast que aparece al agregar un producto */
 .toast {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
+    position: fixed;                /* Fija en la pantalla */
+    bottom: 30px;                   /* 30px desde abajo */
+    right: 30px;                    /* 30px desde la derecha */
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 14px 24px;
-    background: var(--gris);
-    border: 1px solid var(--rojo);
+    background: var(--gris);        /* Fondo gris */
+    border: 1px solid var(--rojo);  /* Borde rojo */
     border-radius: 4px;
     color: var(--blanco);
     font-size: 0.8rem;
     letter-spacing: 1px;
-    z-index: 9999;
-    transform: translateY(100px);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px var(--rojo-glow);
+    z-index: 9999;                  /* Por encima de TODO */
+    transform: translateY(100px);   /* Posición inicial: 100px más abajo (fuera de vista) */
+    opacity: 0;                     /* Invisible por defecto */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animación con rebote */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px var(--rojo-glow); /* Sombra + brillo */
 }
 
+/* Toast visible (clase toggled por JavaScript) */
 .toast.visible {
-    transform: translateY(0);
-    opacity: 1;
+    transform: translateY(0);       /* Sube a su posición final */
+    opacity: 1;                     /* Se hace visible */
 }
 
+/* Icono SVG (checkmark) dentro del toast */
 .toast svg {
-    color: var(--rojo);
-    flex-shrink: 0;
+    color: var(--rojo);            /* Rojo */
+    flex-shrink: 0;                /* No se encoge si el texto es largo */
 }
 
 /* ==========================================
    PANEL CARRITO
    ========================================== */
+
+/* Capa oscura que se muestra detrás del panel del carrito */
 .carrito-overlay {
-    position: fixed;
+    position: fixed;                /* Cubre toda la pantalla */
     inset: 0;
-    background: rgba(0,0,0,0.6);
-    z-index: 2000;
-    opacity: 0;
-    pointer-events: none;
+    background: rgba(0,0,0,0.6);   /* Negro semitransparente */
+    z-index: 2000;                  /* Debajo del panel pero encima de todo lo demás */
+    opacity: 0;                     /* Invisible por defecto */
+    pointer-events: none;           /* No bloquea clics cuando está invisible */
     transition: opacity 0.3s ease;
 }
 
+/* Overlay visible cuando el carrito está abierto */
 .carrito-overlay.visible {
     opacity: 1;
-    pointer-events: all;
+    pointer-events: all;           /* Bloquea clics en el fondo cuando está visible */
 }
 
+/* Panel lateral del carrito */
 .carrito-panel {
     position: fixed;
     top: 0;
-    right: -420px;
-    width: 400px;
-    max-width: 90vw;
-    height: 100vh;
+    right: -420px;                 /* Posición inicial: fuera de la pantalla a la derecha */
+    width: 400px;                  /* Ancho del panel */
+    max-width: 90vw;               /* En pantallas pequeñas, máximo 90% del ancho */
+    height: 100vh;                 /* Toda la altura */
     background: var(--gris-oscuro);
-    border-left: 1px solid rgba(196,30,58,0.2);
-    z-index: 2001;
+    border-left: 1px solid rgba(196,30,58,0.2); /* Borde izquierdo rojo sutil */
+    z-index: 2001;                 /* Por encima del overlay */
     display: flex;
-    flex-direction: column;
-    transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow: -10px 0 40px rgba(0,0,0,0.5);
+    flex-direction: column;        /* Columna: header, lista, footer */
+    transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1); /* Deslizamiento suave */
+    box-shadow: -10px 0 40px rgba(0,0,0,0.5); /* Sombra hacia la izquierda */
 }
 
+/* Panel visible: se desliza hacia adentro */
 .carrito-panel.visible {
-    right: 0;
+    right: 0;                      /* Se ubica en el borde derecho de la pantalla */
 }
 
+/* Encabezado del panel (título + botón cerrar) */
 .carrito-panel__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px 24px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05); /* Línea divisoria */
 }
 
+/* Título "TU CARRITO" del panel */
 .carrito-panel__header h3 {
     font-family: var(--font-display);
     font-size: 1rem;
     letter-spacing: 3px;
 }
 
+/* Botón X para cerrar el panel */
 .carrito-panel__cerrar {
-    background: none;
+    background: none;               /* Sin fondo */
     border: none;
     color: var(--blanco-roto);
     cursor: pointer;
@@ -836,41 +943,48 @@ body {
     transition: color 0.3s;
 }
 
+/* Botón cerrar al hover */
 .carrito-panel__cerrar:hover {
     color: var(--rojo);
 }
 
+/* Lista de items del carrito (área scrolleable) */
 .carrito-panel__lista {
-    flex: 1;
-    overflow-y: auto;
+    flex: 1;                       /* Ocupa todo el espacio disponible entre header y footer */
+    overflow-y: auto;              /* Scroll vertical si hay muchos items */
     padding: 16px 24px;
 }
 
+/* Mensaje "Tu carrito está vacío" */
 .carrito-panel__vacio {
     text-align: center;
-    color: rgba(240,230,211,0.3);
+    color: rgba(240,230,211,0.3); /* Muy tenue */
     font-size: 0.85rem;
-    margin-top: 60px;
+    margin-top: 60px;             /* Espacio superior para centrarlo verticalmente */
 }
 
+/* Cada item individual dentro del carrito (creado dinámicamente por JS) */
 .carrito-item {
     display: flex;
     align-items: center;
     gap: 14px;
     padding: 14px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    animation: itemEntrada 0.3s ease-out;
+    border-bottom: 1px solid rgba(255,255,255,0.04); /* Línea divisoria entre items */
+    animation: itemEntrada 0.3s ease-out; /* Animación al aparecer */
 }
 
+/* Fotogramas clave de la animación de entrada de un item al carrito */
 @keyframes itemEntrada {
-    from { opacity: 0; transform: translateX(20px); }
-    to { opacity: 1; transform: translateX(0); }
+    from { opacity: 0; transform: translateX(20px); } /* Empieza invisible y desplazado a la derecha */
+    to { opacity: 1; transform: translateX(0); }      /* Aparece en su posición final */
 }
 
+/* Área de información del item (nombre + precio) */
 .carrito-item__info {
-    flex: 1;
+    flex: 1;                       /* Ocupa el espacio disponible */
 }
 
+/* Nombre del producto en el carrito */
 .carrito-item__nombre {
     font-family: var(--font-display);
     font-size: 0.8rem;
@@ -878,29 +992,34 @@ body {
     margin-bottom: 4px;
 }
 
+/* Precio del producto en el carrito */
 .carrito-item__precio {
     font-size: 0.75rem;
-    color: var(--dorado);
+    color: var(--dorado);         /* Dorado */
 }
 
+/* Botón para eliminar un item del carrito */
 .carrito-item__eliminar {
     background: none;
     border: none;
-    color: rgba(240,230,211,0.3);
+    color: rgba(240,230,211,0.3); /* Muy tenue por defecto */
     cursor: pointer;
     padding: 4px;
     transition: color 0.3s;
 }
 
+/* Botón eliminar al hover */
 .carrito-item__eliminar:hover {
-    color: var(--rojo);
+    color: var(--rojo);            /* Se pone rojo */
 }
 
+/* Pie del panel del carrito (total + botón pagar) */
 .carrito-panel__footer {
     padding: 20px 24px;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(255,255,255,0.05); /* Línea divisoria */
 }
 
+/* Fila del total (etiqueta + monto) */
 .carrito-panel__total {
     display: flex;
     justify-content: space-between;
@@ -908,20 +1027,23 @@ body {
     margin-bottom: 16px;
 }
 
+/* La palabra "TOTAL" */
 .carrito-panel__total span:first-child {
     font-size: 0.7rem;
     letter-spacing: 3px;
     color: var(--blanco-roto);
 }
 
+/* El monto total */
 .carrito-panel__total span:last-child {
     font-family: var(--font-display);
-    font-size: 1.2rem;
-    color: var(--dorado);
+    font-size: 1.2rem;            /* Más grande */
+    color: var(--dorado);         /* Dorado */
 }
 
+/* Botón "RESERVAR CITA" del carrito */
 .carrito-panel__pagar {
-    width: 100%;
+    width: 100%;                   /* Todo el ancho */
     padding: 14px;
     background: var(--rojo);
     border: none;
@@ -933,105 +1055,112 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Botón pagar al hover */
 .carrito-panel__pagar:hover {
     background: var(--rojo-oscuro);
-    box-shadow: 0 0 25px var(--rojo-glow);
+    box-shadow: 0 0 25px var(--rojo-glow); /* Brillo rojo */
 }
 
 /* ==========================================
    ANIMACIONES SCROLL (reveal)
    ========================================== */
+
+/* Clase base para elementos que se animan al entrar en el viewport (usado por JS con IntersectionObserver) */
 .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    opacity: 0;                    /* Invisible por defecto */
+    transform: translateY(30px);   /* 30px más abajo */
+    transition: opacity 0.7s ease, transform 0.7s ease; /* Transición suave */
 }
 
+/* Clase visible cuando el elemento entra en el viewport (agregada por JS) */
 .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1;                    /* Se hace visible */
+    transform: translateY(0);      /* Vuelve a su posición */
 }
 
 /* ==========================================
    RESPONSIVE
    ========================================== */
+
+/* Media query para tablets y pantallas medianas (hasta 768px) */
 @media (max-width: 768px) {
     .navbar {
-        padding: 0 16px;
+        padding: 0 16px;           /* Menos padding lateral */
     }
 
     .navbar__titulo {
-        font-size: 0.7rem;
+        font-size: 0.7rem;         /* Título más pequeño */
         letter-spacing: 1.5px;
     }
 
     .navbar__kanji {
-        font-size: 1.5rem;
+        font-size: 1.5rem;         /* Kanji más pequeño */
     }
 
     .navbar__icono {
-        width: 36px;
+        width: 36px;               /* Iconos más pequeños */
         height: 36px;
     }
 
     .navbar__icono::after {
-        display: none;
+        display: none;             /* Oculta los tooltips en móvil (no funcionan bien con touch) */
     }
 
     .hero__titulo {
-        font-size: clamp(2rem, 10vw, 3.5rem);
+        font-size: clamp(2rem, 10vw, 3.5rem); /* Título del hero más pequeño en móvil */
     }
 
     .hero__decorativo {
-        display: none;
+        display: none;             /* Oculta los kanjis decorativos en móvil */
     }
 
     .estilos {
-        padding: 70px 16px 60px;
+        padding: 70px 16px 60px;   /* Menos padding */
     }
 
     .estilos__grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Columnas más estrechas */
         gap: 16px;
     }
 
     .tarjeta__img-wrap {
-        height: 260px;
+        height: 260px;             /* Imágenes de tarjetas más cortas */
     }
 
     .galeria__grid {
-        grid-template-columns: 1fr 1fr;
-        grid-auto-rows: 200px;
+        grid-template-columns: 1fr 1fr; /* 2 columnas en vez de 3 */
+        grid-auto-rows: 200px;          /* Filas más cortas */
     }
 
     .galeria__item--grande {
-        grid-column: span 2;
-        grid-row: span 1;
+        grid-column: span 2;       /* Items grandes ocupan 2 columnas */
+        grid-row: span 1;          /* Pero solo 1 fila (ya no se expanden verticalmente) */
     }
 
     .footer__contenido {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Footer en una sola columna */
         gap: 30px;
         padding: 30px 20px;
     }
 }
 
+/* Media query para móviles pequeños (hasta 480px) */
 @media (max-width: 480px) {
     .estilos__grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Una sola columna: una tarjeta por fila */
     }
 
     .galeria__grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Una sola columna: una imagen por fila */
         grid-auto-rows: 220px;
     }
 
     .galeria__item--grande {
-        grid-column: span 1;
+        grid-column: span 1;       /* Items grandes ya no se expanden horizontalmente */
     }
 
     .filtro-btn {
-        padding: 8px 18px;
+        padding: 8px 18px;         /* Botones de filtro más compactos */
         font-size: 0.65rem;
     }
 }
